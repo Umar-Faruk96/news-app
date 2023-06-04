@@ -1,6 +1,6 @@
 import React, { useEffect, useState } from "react";
-import NewsCard from "../NewsCard/NewsCard";
 import { Row } from "react-bootstrap";
+import NewsCard from "../NewsCard/NewsCard";
 
 const TopNews = () => {
   const [news, setNews] = useState([]);
@@ -13,20 +13,26 @@ const TopNews = () => {
       .then((data) => setNews(data.articles));
   }, []);
 
-  const newsPublished = news.slice(0, 16);
+  try {
+    const newsPublished = news.slice(0, 16);
 
-  return (
-    <>
-      <h2 className="text-info text-center mt-3 mb-4 fs-4">
-        Top News Today : {newsPublished.length}
-      </h2>
-      <Row lg={4} className="g-3">
-        {newsPublished.map((article) => (
-          <NewsCard article={article} key={article.publishedAT} />
-        ))}
-      </Row>
-    </>
-  );
+    // console.log(newsPublished);
+
+    return (
+      <>
+        <h2 className="text-info text-center mt-3 mb-4 fs-4">
+          Top News Today : {newsPublished.length}
+        </h2>
+        <Row lg={4} className="g-3">
+          {newsPublished.map((article) => (
+            <NewsCard article={article} key={article.publishedAt} />
+          ))}
+        </Row>
+      </>
+    );
+  } catch (err) {
+    console.log(err.message);
+  }
 };
 
 export default TopNews;
